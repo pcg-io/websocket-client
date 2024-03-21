@@ -1,6 +1,7 @@
 import errno
 import selectors
 import socket
+import logging
 from typing import Union
 
 from ._exceptions import (
@@ -127,6 +128,11 @@ def recv(sock: socket.socket, bufsize: int) -> bytes:
             raise WebSocketTimeoutException(message)
         else:
             raise
+
+    if bytes_ is None:
+        logging.info("bytes_ is None")
+    elif bytes_ == '':
+        logging.info("bytes_ is empty")
 
     if not bytes_:
         raise WebSocketConnectionClosedException("Connection to remote host was lost.")
